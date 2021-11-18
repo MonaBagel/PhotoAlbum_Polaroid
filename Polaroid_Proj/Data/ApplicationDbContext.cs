@@ -2,19 +2,20 @@
 using Microsoft.EntityFrameworkCore;
 using Polaroid_Proj.Models.Gallery;
 using Polaroid_Proj.Models.GalleryAccess;
+using Polaroid_Proj.Models.User.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Polaroid_Proj.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
         }
 
-/*        protected override void OnModelCreating(ModelBuilder builder)
+        /*        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
