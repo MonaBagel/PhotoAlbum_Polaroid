@@ -15,6 +15,8 @@ namespace Polaroid_Proj.Models.GalleryAccess
         public int? GalleryItemId { get; set; }
         public virtual GalleryItem GalleryItem { get; set; }
 
+
+        public int? AccessRoleId { get; set; }
         public virtual GalleryAccessRole AccessRole { get; set; }
 
 

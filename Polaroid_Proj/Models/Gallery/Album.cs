@@ -7,6 +7,6 @@ namespace Polaroid_Proj.Models.Gallery
 {
     public class Album : GalleryItem
     {
-        public ICollection<Photo> Photos { get; set; }
+        //public ICollection<Photo> Photos { get; set; }
     }
 }
