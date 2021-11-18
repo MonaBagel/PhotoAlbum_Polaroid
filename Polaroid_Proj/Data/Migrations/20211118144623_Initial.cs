@@ -47,20 +47,6 @@ namespace Polaroid_Proj.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GalleryAccessRoles",
-                columns: table => new
-                {
-                    AccessRoleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AccessLevelTitle = table.Column<string>(maxLength: 20, nullable: true),
-                    AccessRoleDecription = table.Column<string>(maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GalleryAccessRoles", x => x.AccessRoleId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GalleryItems",
                 columns: table => new
                 {
@@ -71,11 +57,18 @@ namespace Polaroid_Proj.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
-                    CapturedDate = table.Column<DateTime>(nullable: true)
+                    CapturedDate = table.Column<DateTime>(nullable: true),
+                    AlbumId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GalleryItems", x => x.GalleryItemId);
+                    table.ForeignKey(
+                        name: "FK_GalleryItems_GalleryItems_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "GalleryItems",
+                        principalColumn: "GalleryItemId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,32 +177,6 @@ namespace Polaroid_Proj.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "GalleryUserAccessRoles",
-                columns: table => new
-                {
-                    UserAccessRoleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GalleryItemId = table.Column<int>(nullable: true),
-                    AccessRoleId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GalleryUserAccessRoles", x => x.UserAccessRoleId);
-                    table.ForeignKey(
-                        name: "FK_GalleryUserAccessRoles_GalleryAccessRoles_AccessRoleId",
-                        column: x => x.AccessRoleId,
-                        principalTable: "GalleryAccessRoles",
-                        principalColumn: "AccessRoleId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_GalleryUserAccessRoles_GalleryItems_GalleryItemId",
-                        column: x => x.GalleryItemId,
-                        principalTable: "GalleryItems",
-                        principalColumn: "GalleryItemId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -250,14 +217,9 @@ namespace Polaroid_Proj.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GalleryUserAccessRoles_AccessRoleId",
-                table: "GalleryUserAccessRoles",
-                column: "AccessRoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GalleryUserAccessRoles_GalleryItemId",
-                table: "GalleryUserAccessRoles",
-                column: "GalleryItemId");
+                name: "IX_GalleryItems_AlbumId",
+                table: "GalleryItems",
+                column: "AlbumId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -278,19 +240,13 @@ namespace Polaroid_Proj.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "GalleryUserAccessRoles");
+                name: "GalleryItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "GalleryAccessRoles");
-
-            migrationBuilder.DropTable(
-                name: "GalleryItems");
         }
     }
 }

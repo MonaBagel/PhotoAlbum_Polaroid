@@ -247,48 +247,6 @@ namespace Polaroid_Proj.Data.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("GalleryItem");
                 });
 
-            modelBuilder.Entity("Polaroid_Proj.Models.GalleryAccess.GalleryAccessRole", b =>
-                {
-                    b.Property<int>("AccessRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccessLevelTitle")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<string>("AccessRoleDecription")
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.HasKey("AccessRoleId");
-
-                    b.ToTable("GalleryAccessRoles");
-                });
-
-            modelBuilder.Entity("Polaroid_Proj.Models.GalleryAccess.GalleryUserAccessRole", b =>
-                {
-                    b.Property<int>("UserAccessRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AccessRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GalleryItemId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserAccessRoleId");
-
-                    b.HasIndex("AccessRoleId");
-
-                    b.HasIndex("GalleryItemId");
-
-                    b.ToTable("GalleryUserAccessRoles");
-                });
-
             modelBuilder.Entity("Polaroid_Proj.Models.Gallery.Album", b =>
                 {
                     b.HasBaseType("Polaroid_Proj.Models.Gallery.GalleryItem");
@@ -300,12 +258,17 @@ namespace Polaroid_Proj.Data.Migrations
                 {
                     b.HasBaseType("Polaroid_Proj.Models.Gallery.GalleryItem");
 
+                    b.Property<int?>("AlbumId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CapturedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("AlbumId");
 
                     b.HasDiscriminator().HasValue("Photo");
                 });
@@ -361,15 +324,11 @@ namespace Polaroid_Proj.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Polaroid_Proj.Models.GalleryAccess.GalleryUserAccessRole", b =>
+            modelBuilder.Entity("Polaroid_Proj.Models.Gallery.Photo", b =>
                 {
-                    b.HasOne("Polaroid_Proj.Models.GalleryAccess.GalleryAccessRole", "AccessRole")
-                        .WithMany()
-                        .HasForeignKey("AccessRoleId");
-
-                    b.HasOne("Polaroid_Proj.Models.Gallery.GalleryItem", "GalleryItem")
-                        .WithMany()
-                        .HasForeignKey("GalleryItemId");
+                    b.HasOne("Polaroid_Proj.Models.Gallery.Album", "Album")
+                        .WithMany("Photos")
+                        .HasForeignKey("AlbumId");
                 });
 #pragma warning restore 612, 618
         }
