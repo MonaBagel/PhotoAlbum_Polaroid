@@ -24,6 +24,17 @@ html {
     min-height: 100%;
 }
 
+html {
+    font-size: 16px;
+    color: var(--grey);
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 body {
     /* Margin bottom by footer height */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -51,36 +62,41 @@ a.navbar-brand {
     font-size: 16px;
 }
 
-
-
-
-/* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: var(--blue);
+}
+
+a:active, a:hover {
+    text-shadow: 0px 0px 5px var(--blue);
+    font-weight:bold;
 }
 
 .btn-primary {
-    color: var(--blue);
+    color: var(--white);
     background-color: var(--blue);
+    /*border-color: var(--blue);*/
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 0px;
+    margin: 10px 10px 10px 0px;
+}
+
+a .btn-primary:active, a .btn-primary:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    color: var(--blue);
+    background-color: var(--white);
     border-color: var(--blue);
+    box-shadow: 0px 0px 20px 5px var(--blue);
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+      color: #fff;
+      background-color: #1b6ec2;
+      border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+
 
 .border-top {
     border-top: 1px solid var(--grey);
