@@ -13,7 +13,6 @@ namespace Polaroid_Proj.Models.Gallery
 
         [Required]
         [DataType(DataType.Date)]
-
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime CapturedDate { get; set; }
 

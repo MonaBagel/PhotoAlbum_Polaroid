@@ -10,6 +10,11 @@ namespace Polaroid_Proj.Models.Gallery
     {
         [Key]
         public int GalleryItemId { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime CapturedDate { get; set; }
         public int UserId { get; set; }
 
         [MaxLength(20)]
