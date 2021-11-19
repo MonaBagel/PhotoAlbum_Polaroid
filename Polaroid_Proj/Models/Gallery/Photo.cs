@@ -11,11 +11,6 @@ namespace Polaroid_Proj.Models.Gallery
         [Required]
         public string ImageUrl { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CapturedDate { get; set; }
-
         public int? AlbumId { get; set; }
         public virtual Album Album { get; set; }
 
