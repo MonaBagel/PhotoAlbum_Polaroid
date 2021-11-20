@@ -20,7 +20,7 @@ namespace Polaroid_Proj.Controllers
         public PhotosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            this._webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Photos
@@ -64,37 +64,34 @@ namespace Polaroid_Proj.Controllers
         public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
         {
             DateTime currentDate = DateTime.Now;
-/*
-            if (photoModel.GalleryPhoto != null)
-            {
-                //give image unique name to avoid conflicts in database
-                string rootPath = _webHostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(photoModel.GalleryPhoto.FileName);
-                string fileExtension = Path.GetExtension(photoModel.GalleryPhoto.FileName);
-                //Assign newly created file path to the photo's url storage
-                photoModel.ImageUrl = fileName = fileName + currentDate.ToString("yymmssfff") + fileExtension;
+            
 
-                //specify spcific folder to save to
-                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath + "/imageTest", fileName);
-            }*/
 
             if (ModelState.IsValid)
             {
-                
-                //Give a photo captured date the current date
+                //owner test variable
+                photoModel.Owner = "TestUserValue";
+
+                //Change captured date to the current date
                 photoModel.CapturedDate = currentDate;
 
+                //photoModel.ImageUrl = "this is an image url placeholder";
+                if (photoModel.GalleryPhoto != null)
+                {                 
+                    //string rootPath = _webHostEnvironment.WebRootPath;
+                    //give image unique name to avoid conflicts
+                    string fileName = Path.GetFileNameWithoutExtension(photoModel.GalleryPhoto.FileName);
+                    string fileExtension = Path.GetExtension(photoModel.GalleryPhoto.FileName);
+                    photoModel.ImageName = fileName = fileName + currentDate.ToString("yymmssfff") + fileExtension;
+
+
+                    //where image will be stored
+                    string photosFolder = Path.Combine(_webHostEnvironment.WebRootPath + "imageTest", fileName);
+                    //local test storage area for photos
                 
-
-                photoModel.ImageUrl = "this is an image url placeholder";
-
-                /*if (photo.GalleryPhoto != null)
-                {
-                    //image storage path
-                    string localFolder = "imageTest";
-                    localFolder += photo.GalleryPhoto.FileName + currentDate.ToString("yymmssfff");
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, localFolder);
-                }*/
+                
+                
+                }
 
                 _context.Add(photoModel);
                 await _context.SaveChangesAsync();

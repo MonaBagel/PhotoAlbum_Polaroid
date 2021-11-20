@@ -11,7 +11,7 @@ namespace Polaroid_Proj.Models.Gallery
 {
     public class PhotoModel : GalleryItem
     {
-        public string ImageUrl { get; set; }
+        public string ImageName { get; set; }
 
         public int? AlbumId { get; set; }
         public virtual Album Album { get; set; }

@@ -11,7 +11,7 @@ namespace Polaroid_Proj.Models.Gallery
         [Key]
         public int GalleryItemId { get; set; }
 
-        /*public int UserId { get; set; }*/
+        public string Owner { get; set; }
 
         [MaxLength(20)]
         [Required(ErrorMessage = "Please provide a title.")]
