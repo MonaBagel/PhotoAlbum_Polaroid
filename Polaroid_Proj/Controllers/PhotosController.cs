@@ -61,15 +61,32 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description")] Photo photo)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
         {
+            DateTime currentDate = DateTime.Now;
+/*
+            if (photoModel.GalleryPhoto != null)
+            {
+                //give image unique name to avoid conflicts in database
+                string rootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(photoModel.GalleryPhoto.FileName);
+                string fileExtension = Path.GetExtension(photoModel.GalleryPhoto.FileName);
+                //Assign newly created file path to the photo's url storage
+                photoModel.ImageUrl = fileName = fileName + currentDate.ToString("yymmssfff") + fileExtension;
+
+                //specify spcific folder to save to
+                string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath + "/imageTest", fileName);
+            }*/
 
             if (ModelState.IsValid)
             {
-                DateTime currentDate = DateTime.Now;
-                photo.CapturedDate = currentDate;
+                
+                //Give a photo captured date the current date
+                photoModel.CapturedDate = currentDate;
 
-                photo.ImageUrl = "this is an image url placeholder";
+                
+
+                photoModel.ImageUrl = "this is an image url placeholder";
 
                 /*if (photo.GalleryPhoto != null)
                 {
@@ -77,17 +94,14 @@ namespace Polaroid_Proj.Controllers
                     string localFolder = "imageTest";
                     localFolder += photo.GalleryPhoto.FileName + currentDate.ToString("yymmssfff");
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, localFolder);
-                }
-*/
+                }*/
 
-
-
-                _context.Add(photo);
+                _context.Add(photoModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
-            return View(photo);
+            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photoModel.AlbumId);
+            return View(photoModel);
         }
 
         // GET: Photos/Edit/5
@@ -112,7 +126,7 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] PhotoModel photo)
         {
             if (id != photo.GalleryItemId)
             {

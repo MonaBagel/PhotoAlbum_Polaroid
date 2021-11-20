@@ -23,7 +23,7 @@ namespace Polaroid_Proj.Data
         }*/
 
         public DbSet<GalleryItem> GalleryItems { get; set; }
-        public DbSet<Photo> Photos { get; set; }
+        public DbSet<PhotoModel> Photos { get; set; }
         public DbSet<Album> Albums { get; set; }
         //public DbSet<GalleryAccessRole> GalleryAccessRoles { get; set; }
         //public DbSet<GalleryUserAccessRole> GalleryUserAccessRoles { get; set; }

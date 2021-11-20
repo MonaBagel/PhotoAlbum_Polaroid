@@ -56,8 +56,7 @@ namespace Polaroid_Proj.Controllers
         {
             if (ModelState.IsValid)
             {
-                DateTime currentDate = DateTime.Now;
-                album.CapturedDate = currentDate;
+                album.CapturedDate = DateTime.Now;
 
                 _context.Add(album);
                 await _context.SaveChangesAsync();

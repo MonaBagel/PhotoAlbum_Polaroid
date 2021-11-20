@@ -1,4 +1,4 @@
-﻿@model Polaroid_Proj.Models.Gallery.Photo
+﻿@model Polaroid_Proj.Models.Gallery.PhotoModel
 
 @{
     ViewData["Title"] = "Upload Photo";
@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -25,19 +25,11 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
-@*            <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>*@
-
-            @*            <div class="form-group">
-            <label asp-for="GalleryPhoto" class="control-label"></label>
-            <div class="input-group mb-3">
-                <input asp-for="GalleryPhoto" class="form-control" id="customfile">
+            <div class="form-group">
+                <label asp-for="GalleryPhoto" class="control-label"></label>
+                <input asp-for="GalleryPhoto" accept="image/png, image/bmp, image/ico, image/jpeg, image/jpg, image/gif, image/tiff, image/png"/>
+                <span asp-validation-for="GalleryPhoto" class="text-danger"></span>
             </div>
-            <span asp-validation-for="GalleryPhoto" class="text-danger"></span>
-        </div>*@
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
