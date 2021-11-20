@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,25 +10,22 @@ using Polaroid_Proj.Models.Gallery;
 
 namespace Polaroid_Proj.Controllers
 {
-    public class PhotosController : Controller
+    public class AlbumsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PhotosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public AlbumsController(ApplicationDbContext context)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: Photos
+        // GET: Albums
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Photos.Include(p => p.Album);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Albums.ToListAsync());
         }
 
-        // GET: Photos/Details/5
+        // GET: Albums/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,58 +33,39 @@ namespace Polaroid_Proj.Controllers
                 return NotFound();
             }
 
-            var photo = await _context.Photos
-                .Include(p => p.Album)
+            var album = await _context.Albums
                 .FirstOrDefaultAsync(m => m.GalleryItemId == id);
-            if (photo == null)
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(photo);
+            return View(album);
         }
 
-        // GET: Photos/Create
+        // GET: Albums/Create
         public IActionResult Create()
         {
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator");
             return View();
         }
 
-        // POST: Photos/Create
+        // POST: Albums/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] Photo photo)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,CapturedDate")] Album album)
         {
-            DateTime currentDate = DateTime.Now;
-            photo.CapturedDate = currentDate;
-
             if (ModelState.IsValid)
             {
-
-                
-                if (photo.GalleryPhoto != null)
-                {
-                    //image storage path
-                    string localFolder = "imageTest";
-                    localFolder += photo.GalleryPhoto.FileName + currentDate.ToString("yymmssfff");
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, localFolder);
-                }
-
-
-
-
-                _context.Add(photo);
+                _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
-            return View(photo);
+            return View(album);
         }
 
-        // GET: Photos/Edit/5
+        // GET: Albums/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,23 +73,22 @@ namespace Polaroid_Proj.Controllers
                 return NotFound();
             }
 
-            var photo = await _context.Photos.FindAsync(id);
-            if (photo == null)
+            var album = await _context.Albums.FindAsync(id);
+            if (album == null)
             {
                 return NotFound();
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
-            return View(photo);
+            return View(album);
         }
 
-        // POST: Photos/Edit/5
+        // POST: Albums/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description,CapturedDate")] Album album)
         {
-            if (id != photo.GalleryItemId)
+            if (id != album.GalleryItemId)
             {
                 return NotFound();
             }
@@ -122,12 +97,12 @@ namespace Polaroid_Proj.Controllers
             {
                 try
                 {
-                    _context.Update(photo);
+                    _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PhotoExists(photo.GalleryItemId))
+                    if (!AlbumExists(album.GalleryItemId))
                     {
                         return NotFound();
                     }
@@ -138,11 +113,10 @@ namespace Polaroid_Proj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
-            return View(photo);
+            return View(album);
         }
 
-        // GET: Photos/Delete/5
+        // GET: Albums/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,31 +124,30 @@ namespace Polaroid_Proj.Controllers
                 return NotFound();
             }
 
-            var photo = await _context.Photos
-                .Include(p => p.Album)
+            var album = await _context.Albums
                 .FirstOrDefaultAsync(m => m.GalleryItemId == id);
-            if (photo == null)
+            if (album == null)
             {
                 return NotFound();
             }
 
-            return View(photo);
+            return View(album);
         }
 
-        // POST: Photos/Delete/5
+        // POST: Albums/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var photo = await _context.Photos.FindAsync(id);
-            _context.Photos.Remove(photo);
+            var album = await _context.Albums.FindAsync(id);
+            _context.Albums.Remove(album);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PhotoExists(int id)
+        private bool AlbumExists(int id)
         {
-            return _context.Photos.Any(e => e.GalleryItemId == id);
+            return _context.Albums.Any(e => e.GalleryItemId == id);
         }
     }
 }
