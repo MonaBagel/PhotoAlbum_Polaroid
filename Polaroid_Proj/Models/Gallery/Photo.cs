@@ -17,10 +17,11 @@ namespace Polaroid_Proj.Models.Gallery
         public int? AlbumId { get; set; }
         public virtual Album Album { get; set; }
 
-        /*public string FileName { get; set; }
+        /*public string FileName { get; set; }*/
 
         [NotMapped]
-        [DisplayName("UploadFile")]
-        public IFormFile ImageFile { get; set; }*/
+        [DisplayName("Upload Photo")]
+        [Required(ErrorMessage = "Please upload a photo.")]
+        public IFormFile GalleryPhoto { get; set; }
     }
 }
