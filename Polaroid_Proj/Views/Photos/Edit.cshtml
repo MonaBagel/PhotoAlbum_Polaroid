@@ -23,11 +23,6 @@
                 <select asp-for="AlbumId" class="form-control" asp-items="ViewBag.AlbumId"></select>
                 <span asp-validation-for="AlbumId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FileName" class="control-label"></label>
-                <input asp-for="FileName" class="form-control" />
-                <span asp-validation-for="FileName" class="text-danger"></span>
-            </div>
             <input type="hidden" asp-for="GalleryItemId" />
             <div class="form-group">
                 <label asp-for="CapturedDate" class="control-label"></label>

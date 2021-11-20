@@ -52,10 +52,9 @@ namespace Polaroid_Proj.Data.Migrations
                 {
                     GalleryItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CapturedDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 20, nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    CapturedDate = table.Column<DateTime>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
                     AlbumId = table.Column<int>(nullable: true)

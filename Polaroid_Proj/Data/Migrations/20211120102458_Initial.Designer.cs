@@ -10,8 +10,8 @@ using Polaroid_Proj.Data;
 namespace Polaroid_Proj.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211120072158_UpdatedPhotoModel1")]
-    partial class UpdatedPhotoModel1
+    [Migration("20211120102458_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -242,9 +242,6 @@ namespace Polaroid_Proj.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("GalleryItemId");
 
                     b.ToTable("GalleryItems");
@@ -265,9 +262,6 @@ namespace Polaroid_Proj.Data.Migrations
 
                     b.Property<int?>("AlbumId")
                         .HasColumnType("int");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
