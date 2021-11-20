@@ -123,9 +123,9 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] PhotoModel photo)
+        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,Title,Description")] PhotoModel photoModel)
         {
-            if (id != photo.GalleryItemId)
+            if (id != photoModel.GalleryItemId)
             {
                 return NotFound();
             }
@@ -134,12 +134,12 @@ namespace Polaroid_Proj.Controllers
             {
                 try
                 {
-                    _context.Update(photo);
+                    _context.Update(photoModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PhotoExists(photo.GalleryItemId))
+                    if (!PhotoExists(photoModel.GalleryItemId))
                     {
                         return NotFound();
                     }
@@ -150,8 +150,8 @@ namespace Polaroid_Proj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
-            return View(photo);
+            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photoModel.AlbumId);
+            return View(photoModel);
         }
 
         // GET: Photos/Delete/5
