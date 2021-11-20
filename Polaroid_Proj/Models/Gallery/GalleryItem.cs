@@ -14,7 +14,7 @@ namespace Polaroid_Proj.Models.Gallery
         /*public int UserId { get; set; }*/
 
         [MaxLength(20)]
-        [Required(ErrorMessage = "Please enter a title for the image.")]
+        [Required(ErrorMessage = "Please provide a title.")]
         public string Title { get; set; }
         public string Description { get; set; }
 
