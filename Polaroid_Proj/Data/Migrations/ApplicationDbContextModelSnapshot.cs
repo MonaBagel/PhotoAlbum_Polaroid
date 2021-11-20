@@ -240,9 +240,6 @@ namespace Polaroid_Proj.Data.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("GalleryItemId");
 
                     b.ToTable("GalleryItems");
@@ -263,6 +260,9 @@ namespace Polaroid_Proj.Data.Migrations
 
                     b.Property<int?>("AlbumId")
                         .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()

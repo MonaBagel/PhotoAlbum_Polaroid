@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Photo Gallery";
+}
+
+<section>
+    <div id="content" style="margin: 30px;">
+        <div style="padding: 15px;">
+            <h1 class="text-dark mb-1" style="margin: 0px;">Photo Gallery &nbsp;</h1>
+        </div>
+        <div style="padding: 15px;">
+            <div class="row" style="margin: 0px;">
+                <div class="col-md-6 d-xl-flex justify-content-xl-start align-items-xl-center" style="padding: 0px;">
+                    <div style="padding: 15px;">
+                        <form class="d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                            <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..." style="background: rgb(133,135,150);">
+                            <button class="btn btn-primary py-0" type="button">
+                                <i class="fa">&#xf002;</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-md-end align-items-md-center justify-content-xl-end">
+                    <div id="PhotoGalBtnDiv"
+                         class="d-flex d-sm-flex d-md-flex d-xl-flex align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center justify-content-xl-center"
+                         style="padding: 15px;">
+
+                        @*UPLOAD DROPDOWN*@
+                        <div id="UploadDropDown" class="dropdown">
+                            <button id="upload-btn" class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">
+                                <i class="fa fa-upload"></i>&nbsp;Upload
+                            </button>
+                            <div id="UploadBtnMenu" class="dropdown-menu">
+                                @*Link to single upload page*@
+                                <a id="UploadSingle" class="dropdown-item" asp-area="" asp-controller="Photos" asp-action="Create">
+                                    <i class="fa fa-photo"></i>&nbsp;Upload A Photo
+                                </a>
+                                @*Link to multiple upload page*@
+                                <a id="UploadMultiple" class="dropdown-item" asp-area="" asp-controller="Photos" asp-action="Index">
+                                    <i class="fa fa-th-large"></i>&nbsp;Upload Photos
+                                </a>
+                            </div>
+                        </div>
+
+                        @*SETTING DROPDOWN*@
+                        <div id="SettingDropdown" class="dropdown">
+                            <button id="setting-btn" class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">
+                                <i class="fa fa-gear"></i>&nbsp;Settings
+                            </button>
+                            <div class="dropdown-menu">
+                                @*Download all images*@
+                                <a id="DowloadMultipleSingle" class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="fa fa-download"></i>&nbsp;Download
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="PhotoThumbnail" 
+                 class="row d-flex justify-content-center align-items-center justify-content-md-start justify-content-lg-start" 
+                 style="margin: 0px;">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card d-flex d-sm-flex d-md-flex d-lg-flex d-xl-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" style="border-radius: 0px;box-shadow: 0px 0px 20px #757980;border-width: 20px;border-color: rgb(255,255,255);border-bottom-width: 0px;">
+                        <img id="" class="card-img w-100 d-block" 
+                            @*Place for image url*@
+                             src="pexels-taryn-elliott-4340918.jpg">
+                        <div class="card-body">
+                            <h4 class="text-center card-title">
+                                [Title]
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

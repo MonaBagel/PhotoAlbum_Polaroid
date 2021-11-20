@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Photo Gallery - Create";
+}
+
+<section>
+    <div id="content" style="margin: 30px;">
+        <div style="padding: 15px;">
+            <h1 class="text-dark mb-1" style="margin: 0px;margin-bottom: 0px;">Create Image</h1>
+        </div>
+        <div style="padding: 15px;">
+
+            <div class="row" style="margin: 0px;">
+                <div class="col-md-6 d-xl-flex justify-content-xl-start align-items-xl-center" style="padding: 0px;">
+                    <div class="d-flex d-sm-flex d-md-flex d-xl-flex justify-content-start align-items-center justify-content-sm-start align-items-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-center" 
+                         id="button-div-1" style="padding: 15px;">
+                        <div class="btn-group" role="group">
+                            
+
+
+                            <a id ="BackBtn" class="btn btn-primary d-flex justify-content-center align-items-center" 
+                               type="button" asp-area="" asp-controller="Photos" asp-action="Index">
+                                <i class="fa fa-arrow-left"></i>&nbsp;Back
+                            </a>
+
+                            <a id="BrowseBtn" class="btn btn-primary d-flex justify-content-center align-items-center"
+                               type="button" asp-area="" asp-controller="Photos" asp-action="Index">
+                                <i class="fa fa-folder-open"></i>&nbsp;Browse
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin: 0px;">
+                <div class="col-md-6 d-xl-flex justify-content-xl-start align-items-xl-center" style="padding: 0px;">
+                    <div style="padding: 15px;">
+
+                        <form method="post" style="margin: 0px;padding: 0px;">
+                            
+                            <div class="text-dark mb-3">
+                                <h4 style="font-size: 16px;">Captured By</h4>
+                                <input class="form-control" 
+                                       type="text" 
+                                       name="capturedBy" 
+                                       placeholder="Owner" 
+                                       readonly="">
+                            </div>
+
+                            <div class="text-dark mb-3">
+                                <h4 style="font-size: 16px;">Date Created</h4>
+                                <input class="form-control" 
+                                       type="text" name="date" 
+                                       placeholder="Date" 
+                                       value="date" 
+                                       readonly="">
+                            </div>
+
+                            <div class="text-dark mb-3">
+                                <h4 style="font-size: 16px;">Title</h4>
+                                <input class="form-control" type="text" name="title" placeholder="Title">
+                                <small id="ErrorMessage" class="form-text text-danger">Please enter a title for the image.</small>
+                            </div>
+
+                            <div class="text-dark mb-3">
+                                <h4 style="font-size: 16px;">Description</h4>
+                                <textarea class="form-control" name="description" placeholder="Description" rows="5"></textarea>
+                            </div>
+
+                            <div id="SaveBtn" class="d-flex d-sm-flex d-md-flex d-xl-flex justify-content-start align-items-center justify-content-sm-start align-items-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-center" 
+                                 style="padding: 0px;">
+                                <button class="btn btn-primary d-flex justify-content-center align-items-center" type="button" 
+                                        style="margin: 5px;background: rgb(68,116,157);border-style: none;border-radius: 0px;">
+                                    <i class="fa fa-save"></i>&nbsp;Save
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-xl-flex justify-content-xl-start align-items-xl-center" style="padding: 0px;">
+                    <div id="DisplayImage-div-1" class="d-lg-flex justify-content-lg-center align-items-lg-center"
+                         style="padding: 15px;width: 100%;">
+                        <img id="" class="card-img w-100 d-block"
+                             @*Display image*@
+                             src="pexels-taryn-elliott-4340918.jpg"
+                             style="border-radius: 0px;">
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
