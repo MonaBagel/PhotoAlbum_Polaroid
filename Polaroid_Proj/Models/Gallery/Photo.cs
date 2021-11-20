@@ -11,7 +11,6 @@ namespace Polaroid_Proj.Models.Gallery
 {
     public class Photo : GalleryItem
     {
-        [Required]
         public string ImageUrl { get; set; }
 
         public int? AlbumId { get; set; }
@@ -19,9 +18,9 @@ namespace Polaroid_Proj.Models.Gallery
 
         /*public string FileName { get; set; }*/
 
-        [NotMapped]
+/*        [NotMapped]
         [DisplayName("Upload Photo")]
         [Required(ErrorMessage = "Please upload a photo.")]
-        public IFormFile GalleryPhoto { get; set; }
+        public IFormFile GalleryPhoto { get; set; }*/
     }
 }

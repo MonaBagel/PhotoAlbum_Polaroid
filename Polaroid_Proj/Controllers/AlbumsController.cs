@@ -50,14 +50,15 @@ namespace Polaroid_Proj.Controllers
         }
 
         // POST: Albums/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,CapturedDate")] Album album)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description")] Album album)
         {
             if (ModelState.IsValid)
             {
+                DateTime currentDate = DateTime.Now;
+                album.CapturedDate = currentDate;
+
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,8 +83,7 @@ namespace Polaroid_Proj.Controllers
         }
 
         // POST: Albums/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description,CapturedDate")] Album album)

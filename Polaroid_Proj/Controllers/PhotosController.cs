@@ -61,23 +61,24 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,UserId,Title,Description")] Photo photo)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description")] Photo photo)
         {
-            DateTime currentDate = DateTime.Now;
-            photo.CapturedDate = currentDate;
 
             if (ModelState.IsValid)
             {
+                DateTime currentDate = DateTime.Now;
+                photo.CapturedDate = currentDate;
 
-                
-                if (photo.GalleryPhoto != null)
+                photo.ImageUrl = "this is an image url placeholder";
+
+                /*if (photo.GalleryPhoto != null)
                 {
                     //image storage path
                     string localFolder = "imageTest";
                     localFolder += photo.GalleryPhoto.FileName + currentDate.ToString("yymmssfff");
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, localFolder);
                 }
-
+*/
 
 
 
