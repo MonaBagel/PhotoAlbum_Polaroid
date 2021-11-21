@@ -82,8 +82,8 @@ namespace Polaroid_Proj.Controllers
             if (ModelState.IsValid)
             {
                 //owner test variable
-                //photoModel.Owner = "Sam";
-                photoModel.Owner = "Jim";
+                photoModel.Owner = "Sam";
+                //photoModel.Owner = "Jim";
 
                 //album test
                 //photoModel.AlbumId = 28;

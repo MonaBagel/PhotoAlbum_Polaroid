@@ -5,15 +5,86 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
 
-<h4>Photo</h4>
-<hr />
-<div class="row">
+<section>
+
+    <div id="content" style="margin: 30px;">
+        <div style="padding: 15px;">
+            <h1 class="text-dark mb-1">Edit Photo Details</h1>
+            <hr />
+        </div>
+
+        <div>
+            <div class="row" style="margin: 0px;padding: 15px;">
+                <div class="col-md-6 d-xl-flex justify-content-xl-start align-items-xl-center">
+                    <a class="btn btn-primary justify-content-center align-items-center"
+                       asp-action="Index">
+                        <i class="fa fa-arrow-left"></i>&nbsp;Back
+                    </a>
+                </div>
+            </div>
+
+            <div class="row" style="margin: 0px;padding: 15px;">
+                <div class="col">
+                    <h2 class="text-dark mb-1">@(Model.Title)</h2>
+                </div>
+            </div>
+
+            <div class="row" style="margin: 0px;padding: 0px 15px;">
+                <div class="col-md-6">
+                    @*Picture owner*@
+                    <h6 class="text-dark d-lg-flex align-items-lg-center" style="height: 25px;margin-bottom: 8px;">
+                        <strong>Created By</strong>
+                    </h6>
+                    <label class="form-label">@(Model.Owner)</label>
+
+                    @*Captured Date*@
+                    <h6 class="text-dark d-lg-flex align-items-lg-center" style="height: 25px;margin-bottom: 8px;"><strong>Captured Date</strong>
+                    </h6>
+                    <label class="form-label">@(Model.CapturedDate.ToShortDateString())</label>
+                    <hr>
+
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="GalleryItemId" />
+                        <input type="hidden" asp-for="ImageName" />
+                        <input type="hidden" asp-for="Owner" />
+                        <input type="hidden" asp-for="CapturedDate" />
+
+
+                        <div class="form-group mb-3">
+                            <strong><label asp-for="Title" class="control-label"></label></strong>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <strong><label asp-for="Description" class="control-label"></label></strong>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="d-lg-flex justify-content-lg-center align-items-lg-center" style="width: 100%;">
+                        <img class="d-lg-flex" style="width: 100%;min-height: 100%;" src="@("~/imageTest/"+ Model.ImageName) " asp-append-version="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+@*<div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-
-            <img class="d-lg-flex" style="width: 100%;min-height: 100%;" src="@("~/imageTest/"+ Model.ImageName) " asp-append-version="true">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="GalleryItemId" />
@@ -36,13 +107,7 @@
             </div>
         </form>
     </div>
-
-
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
