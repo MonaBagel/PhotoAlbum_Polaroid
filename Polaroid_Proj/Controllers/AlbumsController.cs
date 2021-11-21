@@ -19,11 +19,23 @@ namespace Polaroid_Proj.Controllers
             _context = context;
         }
 
-        // GET: Albums
-        public async Task<IActionResult> Index()
+        // GET: Photos with search function Search Function
+        public async Task<IActionResult> Index(string SearchValue)
         {
-            return View(await _context.Albums.ToListAsync());
+            var albums = from a in _context.Albums select a;
+
+            if (!String.IsNullOrEmpty(SearchValue))
+            {
+                albums = albums.Where(x => x.Title.Contains(SearchValue) || x.Owner.Contains(SearchValue));
+
+            }
+            else
+                albums = _context.Albums;
+
+            albums = albums.OrderBy(a => a.Title);
+            return View(await albums.ToListAsync());
         }
+
 
         // GET: Albums/Details/5
         public async Task<IActionResult> Details(int? id)

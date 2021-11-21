@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -30,13 +31,11 @@ namespace Polaroid_Proj.Controllers
 
             if (!String.IsNullOrEmpty(SearchValue))
             {
-                photos = photos.Where(s => s.Title.Contains(SearchValue) || s.Owner.Contains(SearchValue));
+                photos = photos.Where(x => x.Title.Contains(SearchValue) || x.Owner.Contains(SearchValue));
 
             }
             else
                photos = _context.Photos;
-
-
 
             photos = photos.OrderBy(p => p.Title);
             return View(await photos.ToListAsync());
@@ -77,8 +76,6 @@ namespace Polaroid_Proj.Controllers
         public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
         {
             DateTime currentDate = DateTime.Now;
-            
-
 
             if (ModelState.IsValid)
             {
@@ -106,8 +103,6 @@ namespace Polaroid_Proj.Controllers
                     {
                         await photoModel.GalleryPhoto.CopyToAsync(fileStream);
                     }
-                
-                
                 }
 
                 _context.Add(photoModel);
@@ -136,8 +131,6 @@ namespace Polaroid_Proj.Controllers
         }
 
         // POST: Photos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description")] PhotoModel photoModel)
@@ -146,10 +139,6 @@ namespace Polaroid_Proj.Controllers
             {
                 return NotFound();
             }
-
-            photoModel.CapturedDate = photoModel.CapturedDate;
-            photoModel.Owner = photoModel.Owner;
-            photoModel.ImageName = photoModel.ImageName;
 
             if (ModelState.IsValid)
             {
@@ -217,5 +206,45 @@ namespace Polaroid_Proj.Controllers
         {
             return _context.Photos.Any(e => e.GalleryItemId == id);
         }
-    }
+
+        //download function
+        [HttpGet]
+        public async Task<IActionResult> Download(string fileName) 
+        {
+            if (fileName == null)
+            {
+                return Content("File name not found.");
+            }
+
+
+            //Specify path to fetch photo from
+            string rootPath = _webHostEnvironment.WebRootPath;
+            
+            string path = Path.Combine(rootPath + "\\imageTest\\", fileName);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+
+            memory.Position = 0;
+            var extension = Path.GetExtension(path).ToLowerInvariant();
+            return File(memory, GetMimeTypes()[extension], Path.GetFileName(path));
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".bmp", "image/bmp"},
+                {".ico", "image/ico"},
+                {".jpg", "image/jpg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".gif", "image/tiff"},
+                {".png", "image/png"},
+            };
+        }
+        }
 }
