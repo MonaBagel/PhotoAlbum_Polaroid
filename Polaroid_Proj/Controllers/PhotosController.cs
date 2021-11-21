@@ -75,7 +75,7 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumId, GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
         {
             DateTime currentDate = DateTime.Now;
 
