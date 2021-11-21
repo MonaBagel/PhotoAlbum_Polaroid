@@ -63,14 +63,13 @@ a.navbar-brand {
 }
 
 a {
-    color: var(--blue);
-    
+    color: var(--blue); 
 }
 
 a:active, a:hover {
     font-weight: bold;
     text-shadow: 0px 0px 5px var(--blue);
-    font-weight:bold;
+    font-weight: bold;
 }
 
 .btn-primary {

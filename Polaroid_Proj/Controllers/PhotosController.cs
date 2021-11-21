@@ -75,18 +75,18 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
+        public async Task<IActionResult> Create([Bind("AlbumId, GalleryItemId,Title,Description,GalleryPhoto")] PhotoModel photoModel)
         {
             DateTime currentDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {
                 //owner test variable
-                photoModel.Owner = "Sam";
-                //photoModel.Owner = "Jim";
+                //photoModel.Owner = "Sam";
+                photoModel.Owner = "Jim";
 
                 //album test
-                photoModel.AlbumId = 28;
+                //photoModel.AlbumId = 28;
 
                 //Change captured date to the current date
                 photoModel.CapturedDate = currentDate;
