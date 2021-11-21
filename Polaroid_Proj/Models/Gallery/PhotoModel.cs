@@ -14,13 +14,13 @@ namespace Polaroid_Proj.Models.Gallery
         public string ImageName { get; set; }
 
         public int? AlbumId { get; set; }
-        public virtual Album Album { get; set; }
+        public virtual AlbumModel Album { get; set; }
 
         /*public string FileName { get; set; }*/
 
         [NotMapped]
         [DisplayName("Upload Photo")]
-        [Required(ErrorMessage = "Please upload a photo.")]
+        //[Required(ErrorMessage = "Please upload a photo.")]
         public IFormFile GalleryPhoto { get; set; }
     }
 }

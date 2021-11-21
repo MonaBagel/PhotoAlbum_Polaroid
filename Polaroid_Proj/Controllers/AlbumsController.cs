@@ -64,7 +64,7 @@ namespace Polaroid_Proj.Controllers
         // POST: Albums/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description")] Album album)
+        public async Task<IActionResult> Create([Bind("GalleryItemId,Title,Description")] AlbumModel album)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace Polaroid_Proj.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description,CapturedDate")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description,CapturedDate")] AlbumModel album)
         {
             if (id != album.GalleryItemId)
             {

@@ -28,6 +28,8 @@ namespace Polaroid_Proj.Controllers
         public async Task<IActionResult> Index(string SearchValue)
         {
             var photos = from p in _context.Photos select p;
+            //photos = photos.Where(p => p.AlbumId == null);
+
 
             if (!String.IsNullOrEmpty(SearchValue))
             {
@@ -83,6 +85,9 @@ namespace Polaroid_Proj.Controllers
                 photoModel.Owner = "Sam";
                 //photoModel.Owner = "Jim";
 
+                //album test
+                photoModel.AlbumId = 28;
+
                 //Change captured date to the current date
                 photoModel.CapturedDate = currentDate;
 
@@ -126,14 +131,14 @@ namespace Polaroid_Proj.Controllers
             {
                 return NotFound();
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
+            //ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photo.AlbumId);
             return View(photo);
         }
 
-        // POST: Photos/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description")] PhotoModel photoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("ImageName,GalleryItemId,Owner,Title,Description,CapturedDate")] PhotoModel photoModel)
         {
             if (id != photoModel.GalleryItemId)
             {
@@ -160,7 +165,7 @@ namespace Polaroid_Proj.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photoModel.AlbumId);
+            //ViewData["AlbumId"] = new SelectList(_context.Albums, "GalleryItemId", "Discriminator", photoModel.AlbumId);
             return View(photoModel);
         }
 
