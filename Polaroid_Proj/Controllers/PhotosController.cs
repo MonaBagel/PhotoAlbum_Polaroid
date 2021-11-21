@@ -89,7 +89,7 @@ namespace Polaroid_Proj.Controllers
                 //photoModel.AlbumId = 28;
 
                 //Change captured date to the current date
-                photoModel.CapturedDate = currentDate;
+                photoModel.CapturedDate = currentDate.Date;
 
                 //photoModel.ImageUrl = "this is an image url placeholder";
                 if (photoModel.GalleryPhoto != null)

@@ -13,9 +13,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
 
-            <div class="col-sm-10">
-                <img src="@("~/imageTest/"+ Model.ImageName) " asp-append-version="true" width="100%" height="230px" />
-            </div>
+            <img class="d-lg-flex" style="width: 100%;min-height: 100%;" src="@("~/imageTest/"+ Model.ImageName) " asp-append-version="true">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="GalleryItemId" />
