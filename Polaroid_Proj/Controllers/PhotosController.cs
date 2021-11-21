@@ -23,12 +23,25 @@ namespace Polaroid_Proj.Controllers
             this._webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: Photos
-        public async Task<IActionResult> Index()
+        // GET: Photos with search function Search Function
+        public async Task<IActionResult> Index(string SearchValue)
         {
-            var applicationDbContext = _context.Photos.Include(p => p.Album);
-            return View(await applicationDbContext.ToListAsync());
+            var photos = from p in _context.Photos select p;
+
+            if (!String.IsNullOrEmpty(SearchValue))
+            {
+                photos = photos.Where(s => s.Title.Contains(SearchValue) || s.Owner.Contains(SearchValue));
+
+            }
+            else
+               photos = _context.Photos;
+
+
+
+            photos = photos.OrderBy(p => p.Title);
+            return View(await photos.ToListAsync());
         }
+
 
         // GET: Photos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -70,7 +83,8 @@ namespace Polaroid_Proj.Controllers
             if (ModelState.IsValid)
             {
                 //owner test variable
-                photoModel.Owner = "TestUserValue";
+                photoModel.Owner = "Sam";
+                //photoModel.Owner = "Jim";
 
                 //Change captured date to the current date
                 photoModel.CapturedDate = currentDate;
@@ -126,12 +140,16 @@ namespace Polaroid_Proj.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImageUrl,AlbumId,FileName,GalleryItemId,CapturedDate,Title,Description")] PhotoModel photoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("GalleryItemId,Title,Description")] PhotoModel photoModel)
         {
             if (id != photoModel.GalleryItemId)
             {
                 return NotFound();
             }
+
+            photoModel.CapturedDate = photoModel.CapturedDate;
+            photoModel.Owner = photoModel.Owner;
+            photoModel.ImageName = photoModel.ImageName;
 
             if (ModelState.IsValid)
             {

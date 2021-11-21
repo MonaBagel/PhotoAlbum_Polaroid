@@ -111,6 +111,8 @@ a:active, a:hover {
     margin: 10px 10px 10px 0px;
 }
 
+
+
 a .btn-primary:active, a .btn-primary:hover, .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
     font-weight: bold;
     color: var(--blue);
