@@ -181,8 +181,16 @@ namespace Polaroid_Proj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var photo = await _context.Photos.FindAsync(id);
-            _context.Photos.Remove(photo);
+            var photoModel = await _context.Photos.FindAsync(id);
+
+            //delete image from folder
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "imageTest", photoModel.ImageName);
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
+            _context.Photos.Remove(photoModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
