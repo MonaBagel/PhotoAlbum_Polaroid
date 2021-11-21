@@ -77,8 +77,8 @@ namespace Polaroid_Proj.Controllers
 
                 //photoModel.ImageUrl = "this is an image url placeholder";
                 if (photoModel.GalleryPhoto != null)
-                {                 
-                    //string rootPath = _webHostEnvironment.WebRootPath;
+                {                   
+                    string rootPath = _webHostEnvironment.WebRootPath;
                     //give image unique name to avoid conflicts
                     string fileName = Path.GetFileNameWithoutExtension(photoModel.GalleryPhoto.FileName);
                     string fileExtension = Path.GetExtension(photoModel.GalleryPhoto.FileName);
@@ -86,9 +86,12 @@ namespace Polaroid_Proj.Controllers
 
 
                     //where image will be stored
-                    string photosFolder = Path.Combine(_webHostEnvironment.WebRootPath + "imageTest", fileName);
+                    string path = Path.Combine(rootPath + "/imageTest/", fileName);
                     //local test storage area for photos
-                
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await photoModel.GalleryPhoto.CopyToAsync(fileStream);
+                    }
                 
                 
                 }
